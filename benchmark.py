@@ -210,8 +210,6 @@ def main():
     temporary.replace(summary_path)
     print(f'\nBenchmark concluido. {len(new_rows)} novas medidas; '
           f'{len(all_rows)} no total.')
-    print(f'Raw: {raw_path}')
-    print(f'Summary: {summary_path}')
 
 
 if __name__ == '__main__':
