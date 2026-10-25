@@ -100,7 +100,7 @@ void next_generation(
     int rows,
     int cols
 ) {
-    #pragma omp parallel for schedule(static)
+    #pragma omp for
     for (int row = 0; row < rows; row++) {
         for (int col = 0; col < cols; col++) {
 
@@ -149,7 +149,7 @@ int main(int argc, char **argv) {
         return 1;
     }
 
-    omp_set_dynamic(0);
+    omp_set_dynamic(0);   // desabilita ajuste dinamico do OpenMP
     omp_set_num_threads(num_threads);
 
     int L, C, G;
@@ -313,6 +313,7 @@ int main(int argc, char **argv) {
      *
      * Assim não é necessário copiar toda a matriz.
      */
+    #pragma omp parallel
     for (int generation = 0; generation < G; generation++) {
 
         next_generation(
@@ -324,9 +325,12 @@ int main(int argc, char **argv) {
             C
         );
 
+        #pragma omp single 
+        {
         char *temp = current;
         current = next;
         next = temp;
+        }
     }
 
     /*

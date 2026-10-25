@@ -1,0 +1,33 @@
+#!/bin/bash
+
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=32
+#SBATCH -p sequana_cpu_dev
+#SBATCH -J life_benchmark
+#SBATCH --output=life_%j.out
+#SBATCH --error=life_%j.err
+
+set -e
+
+echo "Node list: $SLURM_JOB_NODELIST"
+nodeset -e "$SLURM_JOB_NODELIST"
+
+cd "$SLURM_SUBMIT_DIR"
+
+module load intel_psxe/2020_sequana
+
+EXEC="$SCRATCH/game_of_life/life_parallel"
+
+# Verifica as dependencias do executavel
+/usr/bin/ldd "$EXEC"
+
+export OMP_NUM_THREADS="$SLURM_CPUS_PER_TASK"
+export OMP_DYNAMIC=FALSE
+
+echo "OMP_NUM_THREADS=$OMP_NUM_THREADS"
+echo "CPUs alocadas=$SLURM_CPUS_PER_TASK"
+
+srun -n 1 -c "$SLURM_CPUS_PER_TASK" \
+    bash benchmark_cluster.sh
