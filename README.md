@@ -122,7 +122,7 @@ Sem `--output`, o script gera automaticamente um prefixo na forma:
 AAAAMMDD_<entrada-ou-all>_t<threads>
 ```
 
-Por exemplo, para uma entrada (`life-1.in`) com 1, 2, 4 e 8 threads:
+Por exemplo, para uma entrada (`life-1.in`) com 2, 4 e 8 threads:
 
 ```text
 results/
@@ -181,7 +181,7 @@ O speedup e a eficiência são calculados em relação ao **sequencial original*
 Para acrescentar dados a um experimento já criado:
 
 ```bash
-python3 benchmark.py --all --threads 1 2 4 8 --repetitions 5 --append experimento_01
+python3 benchmark.py --all --threads 2 4 8 --repetitions 5 --append experimento_01
 ```
 
 Informe **somente o prefixo**, sem `_raw`, `_summary` ou `.csv`.

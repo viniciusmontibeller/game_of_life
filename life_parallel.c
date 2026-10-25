@@ -139,7 +139,7 @@ void next_generation(
 
 
 int main(int argc, char **argv) {
-    int num_threads;
+    int num_threads = 4; // valor padrao de threads
 
     if (argc > 1) {
         num_threads = atoi(argv[1]);

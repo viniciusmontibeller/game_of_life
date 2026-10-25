@@ -15,7 +15,7 @@ VERSIONS = {
     'simple': ROOT / 'life_parallel_simple',
     'optimized': ROOT / 'life_parallel',
 }
-DEFAULT_THREADS = [1, 2, 4, 8, 16, 32]
+DEFAULT_THREADS = [2, 4, 8, 16, 32]
 RAW_COLUMNS = ['input', 'version', 'threads', 'repetition', 'time_seconds']
 SUMMARY_COLUMNS = [
     'input', 'version', 'threads', 'samples', 'mean_seconds',
