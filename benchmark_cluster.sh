@@ -4,7 +4,7 @@ set -euo pipefail
 INPUT_DIR="ins_outs"
 RESULTS_DIR="results"
 
-THREADS=(2 4 8 16 32 64)
+THREADS=(2 4 8 16 32)
 REPETITIONS=10
 
 mkdir -p "$RESULTS_DIR"
@@ -39,7 +39,7 @@ measure() {
     elapsed=$(cat "$time_file")
     rm -f "$time_file"
 
-    echo "$input,$version,$threads,$repetition,$elapsed" \
+    echo "$(basename "$input"),$version,$threads,$repetition,$elapsed" \
         >> "$RAW_FILE"
 
     echo "$input | $version | $threads threads | ${elapsed}s"
@@ -69,14 +69,14 @@ for input in "$INPUT_DIR"/*.in; do
     echo "Validacao concluida: $name"
 
     for repetition in $(seq 1 "$REPETITIONS"); do
-        measure "$name" seq 1 "$repetition" \
+        measure "$input" seq 1 "$repetition" \
             ./life
 
         for threads in "${THREADS[@]}"; do
-            measure "$name" simple "$threads" "$repetition" \
+            measure "$input" simple "$threads" "$repetition" \
                 ./life_parallel_simple "$threads"
 
-            measure "$name" optimized "$threads" "$repetition" \
+            measure "$input" optimized "$threads" "$repetition" \
                 ./life_parallel "$threads"
         done
     done
