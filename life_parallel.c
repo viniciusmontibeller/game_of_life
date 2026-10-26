@@ -100,7 +100,7 @@ void next_generation(
     int rows,
     int cols
 ) {
-    #pragma omp for
+    #pragma omp for schedule(static)
     for (int row = 0; row < rows; row++) {
         for (int col = 0; col < cols; col++) {
 
@@ -313,7 +313,7 @@ int main(int argc, char **argv) {
      *
      * Assim não é necessário copiar toda a matriz.
      */
-    #pragma omp parallel
+    #pragma omp parallel shared(current, next)
     for (int generation = 0; generation < G; generation++) {
 
         next_generation(
