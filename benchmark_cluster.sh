@@ -33,8 +33,9 @@ measure() {
     local time_file
     time_file=$(mktemp)
 
-    /usr/bin/time -f "%e" -o "$time_file" \
-        "$@" < "$input" > /dev/null
+    TIMEFORMAT='%6R'
+
+    { time "$@" < "$input" > /dev/null; } 2> "$time_file"
 
     elapsed=$(cat "$time_file")
     rm -f "$time_file"

@@ -1,2 +1,5 @@
 ins_outs/life-7*
 ins_outs/life-8*
+
+/results/*
+/results_cluster/*raw.csv
